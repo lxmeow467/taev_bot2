@@ -1,3 +1,22 @@
+"""
+Admin handlers for tournament management
+"""
+
+import json
+import logging
+from typing import List, Dict, Any
+import aiohttp
+from datetime import datetime
+
+from telegram import Update
+from telegram.ext import ContextTypes
+
+from bot.storage import DataStorage
+from bot.localization import Localizer
+
+logger = logging.getLogger(__name__)
+
+
 class AdminHandlers:
     """Handles admin-only commands and operations"""
     
@@ -55,10 +74,33 @@ class AdminHandlers:
             else:
                 message_parts.append("H2H Tournament: No registrations")
 
-            # Send as single message
             await update.message.reply_text("\n".join(message_parts))
             
         except Exception as e:
             logger.error(f"Error listing players: {e}")
             error_text = self.localizer.get_text("list_players_error", lang)
             await update.message.reply_text(error_text)
+
+
+async def set_bot_commands(bot_token: str):
+    """Set bot commands menu globally"""
+    commands = [
+        {"command": "start", "description": "Start the bot"},
+        {"command": "help", "description": "Show help"},
+        {"command": "register", "description": "Register for tournament"},
+        {"command": "my_stats", "description": "Show my statistics"},
+        {"command": "admin", "description": "Admin commands (for admins only)"},
+    ]
+    
+    url = f"https://api.telegram.org/bot{bot_token}/setMyCommands"
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json={"commands": commands}) as response:
+                result = await response.json()
+                if result.get("ok"):
+                    logger.info("✅ Bot commands set successfully")
+                else:
+                    logger.error(f"❌ Failed to set commands: {result}")
+    except Exception as e:
+        logger.error(f"❌ Error setting commands: {e}")
