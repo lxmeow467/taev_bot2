@@ -72,12 +72,9 @@ class WorkingTournamentBot:
         welcome_text = self.localizer.get_text("welcome_message", lang)
         instructions_text = self.localizer.get_text("instructions", lang)
         
-        await update.message.reply_text(
-            f"{welcome_text}\n\n{instructions_text}",
-            parse_mode='HTML'
-        )
+        await update.message.reply_text(f"{welcome_text}\n\n{instructions_text}")
         
-        logger.info(f"Пользователь {user.username} запустил бота")
+        logger.info(f"Пользователь {user.username or user.first_name or 'Unknown'} запустил бота")
     
     async def handle_help(self, update, context):
         """Обработка команды /help"""
@@ -87,7 +84,7 @@ class WorkingTournamentBot:
         help_text = self.localizer.get_text("help_message", lang)
         examples_text = self.localizer.get_text("command_examples", lang)
         
-        await update.message.reply_text(f"{help_text}\n\n{examples_text}", parse_mode='HTML')
+        await update.message.reply_text(f"{help_text}\n\n{examples_text}")
     
     async def handle_command(self, update, context):
         """Обработка команды /command (только для админов)"""
@@ -100,16 +97,15 @@ class WorkingTournamentBot:
             return
         
         await update.message.reply_text(
-            "🎮 <b>Команды администратора:</b>\n\n"
+            "🎮 Команды администратора:\n\n"
             "/start - Запуск бота\n"
             "/help - Помощь\n"
             "/list - Список всех игроков\n"
             "/stats - Статистика турнира\n"
             "/clear confirm - Очистить все данные\n"
             "/command - Показать эту справку\n\n"
-            "📝 <b>Для подтверждения регистрации:</b>\n"
-            "Напишите: 'подтвердить @username'",
-            parse_mode='HTML'
+            "📝 Для подтверждения регистрации:\n"
+            "Напишите: 'подтвердить @username'"
         )
     
     async def handle_list(self, update, context):
@@ -130,29 +126,29 @@ class WorkingTournamentBot:
         # VSA Турнир
         vsa_players = players.get("vsa", {})
         if vsa_players:
-            message_parts.append("🏆 <b>VSA Турнир:</b>")
+            message_parts.append("🏆 VSA Турнир:")
             for username, data in vsa_players.items():
                 status = "✅" if data.get("confirmed") else "⏳"
                 message_parts.append(f"{status} {username}: {data['name']} ({data['stars']} ⭐)")
         else:
-            message_parts.append("🏆 <b>VSA Турнир:</b> Нет регистраций")
+            message_parts.append("🏆 VSA Турнир: Нет регистраций")
         
         message_parts.append("")
         
         # H2H Турнир
         h2h_players = players.get("h2h", {})
         if h2h_players:
-            message_parts.append("⚔️ <b>H2H Турнир:</b>")
+            message_parts.append("⚔️ H2H Турнир:")
             for username, data in h2h_players.items():
                 status = "✅" if data.get("confirmed") else "⏳"
                 message_parts.append(f"{status} {username}: {data['name']} ({data['stars']} ⭐)")
         else:
-            message_parts.append("⚔️ <b>H2H Турнир:</b> Нет регистраций")
+            message_parts.append("⚔️ H2H Турнир: Нет регистраций")
         
         # Ожидающие подтверждения
         if temp_registrations:
             message_parts.append("")
-            message_parts.append("⏳ <b>Ожидают подтверждения:</b>")
+            message_parts.append("⏳ Ожидают подтверждения:")
             for user_id, data in temp_registrations.items():
                 username = data.get("username", "Неизвестный")
                 tournament = data.get("tournament_type", "unknown").upper()
@@ -161,7 +157,7 @@ class WorkingTournamentBot:
                 message_parts.append(f"• @{username} - {tournament}: {team_name} ({rating} ⭐)")
         
         final_message = "\n".join(message_parts) if message_parts else "Регистраций не найдено"
-        await update.message.reply_text(final_message, parse_mode='HTML')
+        await update.message.reply_text(final_message)
         
         logger.info(f"Админ {user.username} запросил список игроков")
     
@@ -178,7 +174,7 @@ class WorkingTournamentBot:
         stats = self.storage.get_statistics()
         
         message_parts = [
-            "📊 <b>Статистика турнира:</b>",
+            "📊 Статистика турнира:",
             "",
             f"🏆 VSA Регистрации: {stats['vsa_total']} всего, {stats['vsa_confirmed']} подтверждено",
             f"⚔️ H2H Регистрации: {stats['h2h_total']} всего, {stats['h2h_confirmed']} подтверждено", 
@@ -188,7 +184,7 @@ class WorkingTournamentBot:
             f"🕐 Последняя регистрация: {stats['last_registration_time'] or 'Никогда'}"
         ]
         
-        await update.message.reply_text("\n".join(message_parts), parse_mode='HTML')
+        await update.message.reply_text("\n".join(message_parts))
         logger.info(f"Админ {user.username} запросил статистику")
     
     async def handle_clear(self, update, context):
@@ -266,14 +262,14 @@ class WorkingTournamentBot:
             context.user_data["registration_data"]["team_name"] = team_name
             context.user_data["registration_data"]["timestamp"] = datetime.now()
             
-            success_text = self.localizer.get_text("team_name_saved", lang).format(team_name=team_name)
+            success_text = self.localizer.get_text("team_name_saved", lang, team_name=team_name)
             next_step_text = self.localizer.get_text("next_step_rating", lang)
             
             await update.message.reply_text(f"{success_text}\n\n{next_step_text}")
-            logger.info(f"Пользователь {user.username} установил название команды: {team_name}")
+            logger.info(f"Пользователь {user.username or user.first_name or 'Unknown'} установил название команды: {team_name}")
             
         except ValidationError as e:
-            error_text = self.localizer.get_text("validation_error", lang).format(error=str(e))
+            error_text = self.localizer.get_text("validation_error", lang, error=str(e))
             await update.message.reply_text(error_text)
     
     async def handle_rating(self, update, context, tournament_type: str, rating: int, lang: str):
@@ -293,26 +289,23 @@ class WorkingTournamentBot:
             
             success = await self.storage.save_temp_registration(
                 user_id=user.id,
-                username=user.username,
+                username=user.username or user.first_name or "Unknown",
                 tournament_type=tournament_type,
                 team_name=team_name,
                 rating=rating
             )
             
             if success:
-                success_text = self.localizer.get_text("rating_saved", lang).format(
-                    tournament=tournament_type.upper(), 
-                    rating=rating
-                )
+                success_text = self.localizer.get_text("rating_saved", lang, tournament=tournament_type.upper(), rating=rating)
                 confirm_text = self.localizer.get_text("awaiting_confirmation", lang)
                 await update.message.reply_text(f"{success_text}\n\n{confirm_text}")
-                logger.info(f"Пользователь {user.username} зарегистрировался на {tournament_type}: {rating}")
+                logger.info(f"Пользователь {user.username or user.first_name or 'Unknown'} зарегистрировался на {tournament_type}: {rating}")
             else:
                 error_text = "Регистрация не удалась. Возможно, вы уже зарегистрированы на этот турнир."
                 await update.message.reply_text(error_text)
             
         except ValidationError as e:
-            error_text = self.localizer.get_text("validation_error", lang).format(error=str(e))
+            error_text = self.localizer.get_text("validation_error", lang, error=str(e))
             await update.message.reply_text(error_text)
     
     async def handle_admin_confirm(self, update, context, target_username: str, lang: str):
