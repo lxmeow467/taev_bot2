@@ -54,23 +54,51 @@ class TournamentBot:
         self.storage = DataStorage()
         self.localizer = Localizer()
         self.nlp = NLPProcessor()
+        
+        # Очищаем старые данные при запуске
+        self._clear_old_data()
 
-        logger.info("Турнирный бот инициализирован")
+        logger.info(f"Турнирный бот инициализирован для владельца {self.owner_id}")
+    
+    def _clear_old_data(self):
+        """Очистка старых данных"""
+        try:
+            if os.path.exists('tournament_data.json'):
+                os.remove('tournament_data.json')
+                logger.info("Старые данные турнира очищены")
+            
+            # Также очищаем данные в storage
+            self.storage.data = {
+                "players": {"vsa": {}, "h2h": {}},
+                "temp_registrations": {}
+            }
+            self.storage.save_data()
+            logger.info("Хранилище данных очищено")
+        except Exception as e:
+            logger.error(f"Ошибка очистки данных: {e}")
 
     async def is_owner_in_chat(self, update, context) -> bool:
         """Проверка присутствия владельца в чате"""
         try:
             chat = update.effective_chat
+            user = update.effective_user
+            
+            logger.info(f"Проверка владельца: chat_id={chat.id}, user_id={user.id}, owner_id={self.owner_id}")
             
             # Для личных сообщений разрешаем работу только владельцу
             if chat.type == 'private':
-                return update.effective_user.id == self.owner_id
+                is_owner = user.id == self.owner_id
+                logger.info(f"Личное сообщение: is_owner={is_owner}")
+                return is_owner
             
             # Для групповых чатов проверяем присутствие владельца
             try:
                 owner_member = await context.bot.get_chat_member(chat.id, self.owner_id)
-                return owner_member.status in ['member', 'administrator', 'creator']
-            except Exception:
+                is_owner_in_group = owner_member.status in ['member', 'administrator', 'creator']
+                logger.info(f"Групповой чат: owner_status={owner_member.status}, is_owner_in_group={is_owner_in_group}")
+                return is_owner_in_group
+            except Exception as e:
+                logger.error(f"Владелец не найден в чате {chat.id}: {e}")
                 return False
                 
         except Exception as e:
@@ -122,6 +150,10 @@ class TournamentBot:
 
     async def handle_roster(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /roster"""
+        if not await self.is_owner_in_chat(update, context):
+            logger.info(f"Игнорируем команду /roster от {update.effective_user.id} в чате {update.effective_chat.id} - владелец не найден")
+            return
+            
         if not await self.is_admin(update, context):
             await update.message.reply_text("❌ Только для администраторов")
             return
@@ -162,6 +194,10 @@ class TournamentBot:
 
     async def handle_stats(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /stats"""
+        if not await self.is_owner_in_chat(update, context):
+            logger.info(f"Игнорируем команду /stats от {update.effective_user.id} в чате {update.effective_chat.id} - владелец не найден")
+            return
+            
         if not await self.is_admin(update, context):
             await update.message.reply_text("❌ Только для администраторов")
             return
@@ -316,6 +352,10 @@ class TournamentBot:
 
     async def handle_comande(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /comande"""
+        if not await self.is_owner_in_chat(update, context):
+            logger.info(f"Игнорируем команду /comande от {update.effective_user.id} в чате {update.effective_chat.id} - владелец не найден")
+            return
+            
         if not await self.is_admin(update, context):
             await update.message.reply_text("❌ Только для администраторов")
             return
@@ -337,6 +377,10 @@ class TournamentBot:
 
     async def handle_delplayer(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /delplayer для удаления игрока"""
+        if not await self.is_owner_in_chat(update, context):
+            logger.info(f"Игнорируем команду /delplayer от {update.effective_user.id} в чате {update.effective_chat.id} - владелец не найден")
+            return
+            
         if not await self.is_admin(update, context):
             await update.message.reply_text("❌ Только для администраторов")
             return
