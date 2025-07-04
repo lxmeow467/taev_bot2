@@ -1,40 +1,40 @@
 {
   "players": {
     "vsa": {
-      "@user_0": {
+      "user_0": {
         "name": "team0",
         "stars": 30,
         "confirmed": true,
-        "confirmation_time": "2025-07-03T21:53:01.980332",
-        "registration_time": "2025-07-03T21:53:01.766687"
+        "confirmed_at": "2025-07-03T23:57:50.941694",
+        "registered_at": "2025-07-03T23:57:50.610492"
       },
-      "@user_1": {
+      "user_1": {
         "name": "team1",
         "stars": 31,
         "confirmed": true,
-        "confirmation_time": "2025-07-03T21:53:01.981600",
-        "registration_time": "2025-07-03T21:53:01.767592"
+        "confirmed_at": "2025-07-03T23:57:50.943607",
+        "registered_at": "2025-07-03T23:57:50.610667"
       },
-      "@user_2": {
+      "user_2": {
         "name": "team2",
         "stars": 32,
         "confirmed": true,
-        "confirmation_time": "2025-07-03T21:53:01.985431",
-        "registration_time": "2025-07-03T21:53:01.768663"
+        "confirmed_at": "2025-07-03T23:57:50.946383",
+        "registered_at": "2025-07-03T23:57:50.610840"
       },
-      "@user_3": {
+      "user_3": {
         "name": "team3",
         "stars": 33,
         "confirmed": true,
-        "confirmation_time": "2025-07-03T21:53:01.987126",
-        "registration_time": "2025-07-03T21:53:01.770036"
+        "confirmed_at": "2025-07-03T23:57:50.986272",
+        "registered_at": "2025-07-03T23:57:50.611017"
       },
-      "@user_4": {
+      "user_4": {
         "name": "team4",
         "stars": 34,
         "confirmed": true,
-        "confirmation_time": "2025-07-03T21:53:01.990279",
-        "registration_time": "2025-07-03T21:53:01.771221"
+        "confirmed_at": "2025-07-03T23:57:50.989282",
+        "registered_at": "2025-07-03T23:57:50.611219"
       }
     },
     "h2h": {}
@@ -45,7 +45,7 @@
       "tournament_type": "vsa",
       "team_name": "team5",
       "rating": 35,
-      "timestamp": "2025-07-03T21:53:01.772727",
+      "timestamp": "2025-07-03T23:57:50.611489",
       "confirmed": false
     },
     "6": {
@@ -53,7 +53,7 @@
       "tournament_type": "vsa",
       "team_name": "team6",
       "rating": 36,
-      "timestamp": "2025-07-03T21:53:01.773894",
+      "timestamp": "2025-07-03T23:57:50.611677",
       "confirmed": false
     },
     "7": {
@@ -61,7 +61,7 @@
       "tournament_type": "vsa",
       "team_name": "team7",
       "rating": 37,
-      "timestamp": "2025-07-03T21:53:01.777516",
+      "timestamp": "2025-07-03T23:57:50.611873",
       "confirmed": false
     },
     "8": {
@@ -69,7 +69,7 @@
       "tournament_type": "vsa",
       "team_name": "team8",
       "rating": 38,
-      "timestamp": "2025-07-03T21:53:01.778870",
+      "timestamp": "2025-07-03T23:57:50.612094",
       "confirmed": false
     },
     "9": {
@@ -77,7 +77,7 @@
       "tournament_type": "vsa",
       "team_name": "team9",
       "rating": 39,
-      "timestamp": "2025-07-03T21:53:01.782197",
+      "timestamp": "2025-07-03T23:57:50.612364",
       "confirmed": false
     },
     "10": {
@@ -85,7 +85,7 @@
       "tournament_type": "vsa",
       "team_name": "team10",
       "rating": 40,
-      "timestamp": "2025-07-03T21:53:01.784647",
+      "timestamp": "2025-07-03T23:57:50.613591",
       "confirmed": false
     },
     "11": {
@@ -93,7 +93,7 @@
       "tournament_type": "vsa",
       "team_name": "team11",
       "rating": 41,
-      "timestamp": "2025-07-03T21:53:01.785801",
+      "timestamp": "2025-07-03T23:57:50.613862",
       "confirmed": false
     },
     "12": {
@@ -101,7 +101,7 @@
       "tournament_type": "vsa",
       "team_name": "team12",
       "rating": 42,
-      "timestamp": "2025-07-03T21:53:01.787045",
+      "timestamp": "2025-07-03T23:57:50.614971",
       "confirmed": false
     },
     "13": {
@@ -109,7 +109,7 @@
       "tournament_type": "vsa",
       "team_name": "team13",
       "rating": 43,
-      "timestamp": "2025-07-03T21:53:01.789476",
+      "timestamp": "2025-07-03T23:57:50.616277",
       "confirmed": false
     },
     "14": {
@@ -117,7 +117,7 @@
       "tournament_type": "vsa",
       "team_name": "team14",
       "rating": 44,
-      "timestamp": "2025-07-03T21:53:01.790653",
+      "timestamp": "2025-07-03T23:57:50.617409",
       "confirmed": false
     },
     "15": {
@@ -125,7 +125,7 @@
       "tournament_type": "vsa",
       "team_name": "team15",
       "rating": 45,
-      "timestamp": "2025-07-03T21:53:01.791893",
+      "timestamp": "2025-07-03T23:57:50.618565",
       "confirmed": false
     },
     "16": {
@@ -133,7 +133,7 @@
       "tournament_type": "vsa",
       "team_name": "team16",
       "rating": 46,
-      "timestamp": "2025-07-03T21:53:01.805054",
+      "timestamp": "2025-07-03T23:57:50.619794",
       "confirmed": false
     },
     "17": {
@@ -141,7 +141,7 @@
       "tournament_type": "vsa",
       "team_name": "team17",
       "rating": 47,
-      "timestamp": "2025-07-03T21:53:01.811336",
+      "timestamp": "2025-07-03T23:57:50.621127",
       "confirmed": false
     },
     "18": {
@@ -149,7 +149,7 @@
       "tournament_type": "vsa",
       "team_name": "team18",
       "rating": 48,
-      "timestamp": "2025-07-03T21:53:01.812810",
+      "timestamp": "2025-07-03T23:57:50.622378",
       "confirmed": false
     },
     "19": {
@@ -157,7 +157,7 @@
       "tournament_type": "vsa",
       "team_name": "team19",
       "rating": 49,
-      "timestamp": "2025-07-03T21:53:01.814133",
+      "timestamp": "2025-07-03T23:57:50.623550",
       "confirmed": false
     },
     "20": {
@@ -165,7 +165,7 @@
       "tournament_type": "vsa",
       "team_name": "team20",
       "rating": 50,
-      "timestamp": "2025-07-03T21:53:01.815299",
+      "timestamp": "2025-07-03T23:57:50.624741",
       "confirmed": false
     },
     "21": {
@@ -173,7 +173,7 @@
       "tournament_type": "vsa",
       "team_name": "team21",
       "rating": 51,
-      "timestamp": "2025-07-03T21:53:01.820837",
+      "timestamp": "2025-07-03T23:57:50.626075",
       "confirmed": false
     },
     "22": {
@@ -181,7 +181,7 @@
       "tournament_type": "vsa",
       "team_name": "team22",
       "rating": 52,
-      "timestamp": "2025-07-03T21:53:01.822018",
+      "timestamp": "2025-07-03T23:57:50.627345",
       "confirmed": false
     },
     "23": {
@@ -189,7 +189,7 @@
       "tournament_type": "vsa",
       "team_name": "team23",
       "rating": 53,
-      "timestamp": "2025-07-03T21:53:01.823200",
+      "timestamp": "2025-07-03T23:57:50.628632",
       "confirmed": false
     },
     "24": {
@@ -197,7 +197,7 @@
       "tournament_type": "vsa",
       "team_name": "team24",
       "rating": 54,
-      "timestamp": "2025-07-03T21:53:01.825088",
+      "timestamp": "2025-07-03T23:57:50.629904",
       "confirmed": false
     },
     "25": {
@@ -205,7 +205,7 @@
       "tournament_type": "vsa",
       "team_name": "team25",
       "rating": 55,
-      "timestamp": "2025-07-03T21:53:01.826209",
+      "timestamp": "2025-07-03T23:57:50.631224",
       "confirmed": false
     },
     "26": {
@@ -213,7 +213,7 @@
       "tournament_type": "vsa",
       "team_name": "team26",
       "rating": 56,
-      "timestamp": "2025-07-03T21:53:01.827261",
+      "timestamp": "2025-07-03T23:57:50.634368",
       "confirmed": false
     },
     "27": {
@@ -221,7 +221,7 @@
       "tournament_type": "vsa",
       "team_name": "team27",
       "rating": 57,
-      "timestamp": "2025-07-03T21:53:01.828537",
+      "timestamp": "2025-07-03T23:57:50.635669",
       "confirmed": false
     },
     "28": {
@@ -229,7 +229,7 @@
       "tournament_type": "vsa",
       "team_name": "team28",
       "rating": 58,
-      "timestamp": "2025-07-03T21:53:01.829599",
+      "timestamp": "2025-07-03T23:57:50.637144",
       "confirmed": false
     },
     "29": {
@@ -237,7 +237,7 @@
       "tournament_type": "vsa",
       "team_name": "team29",
       "rating": 59,
-      "timestamp": "2025-07-03T21:53:01.830872",
+      "timestamp": "2025-07-03T23:57:50.638663",
       "confirmed": false
     },
     "30": {
@@ -245,7 +245,7 @@
       "tournament_type": "vsa",
       "team_name": "team30",
       "rating": 60,
-      "timestamp": "2025-07-03T21:53:01.832730",
+      "timestamp": "2025-07-03T23:57:50.640164",
       "confirmed": false
     },
     "31": {
@@ -253,7 +253,7 @@
       "tournament_type": "vsa",
       "team_name": "team31",
       "rating": 61,
-      "timestamp": "2025-07-03T21:53:01.835829",
+      "timestamp": "2025-07-03T23:57:50.641324",
       "confirmed": false
     },
     "32": {
@@ -261,7 +261,7 @@
       "tournament_type": "vsa",
       "team_name": "team32",
       "rating": 62,
-      "timestamp": "2025-07-03T21:53:01.837076",
+      "timestamp": "2025-07-03T23:57:50.642667",
       "confirmed": false
     },
     "33": {
@@ -269,7 +269,7 @@
       "tournament_type": "vsa",
       "team_name": "team33",
       "rating": 63,
-      "timestamp": "2025-07-03T21:53:01.838154",
+      "timestamp": "2025-07-03T23:57:50.644062",
       "confirmed": false
     },
     "34": {
@@ -277,7 +277,7 @@
       "tournament_type": "vsa",
       "team_name": "team34",
       "rating": 64,
-      "timestamp": "2025-07-03T21:53:01.839414",
+      "timestamp": "2025-07-03T23:57:50.645631",
       "confirmed": false
     },
     "35": {
@@ -285,7 +285,7 @@
       "tournament_type": "vsa",
       "team_name": "team35",
       "rating": 65,
-      "timestamp": "2025-07-03T21:53:01.844582",
+      "timestamp": "2025-07-03T23:57:50.647310",
       "confirmed": false
     },
     "36": {
@@ -293,7 +293,7 @@
       "tournament_type": "vsa",
       "team_name": "team36",
       "rating": 66,
-      "timestamp": "2025-07-03T21:53:01.846423",
+      "timestamp": "2025-07-03T23:57:50.648824",
       "confirmed": false
     },
     "37": {
@@ -301,7 +301,7 @@
       "tournament_type": "vsa",
       "team_name": "team37",
       "rating": 67,
-      "timestamp": "2025-07-03T21:53:01.847739",
+      "timestamp": "2025-07-03T23:57:50.650332",
       "confirmed": false
     },
     "38": {
@@ -309,7 +309,7 @@
       "tournament_type": "vsa",
       "team_name": "team38",
       "rating": 68,
-      "timestamp": "2025-07-03T21:53:01.849143",
+      "timestamp": "2025-07-03T23:57:50.651804",
       "confirmed": false
     },
     "39": {
@@ -317,7 +317,7 @@
       "tournament_type": "vsa",
       "team_name": "team39",
       "rating": 69,
-      "timestamp": "2025-07-03T21:53:01.850355",
+      "timestamp": "2025-07-03T23:57:50.653273",
       "confirmed": false
     },
     "40": {
@@ -325,7 +325,7 @@
       "tournament_type": "vsa",
       "team_name": "team40",
       "rating": 70,
-      "timestamp": "2025-07-03T21:53:01.858204",
+      "timestamp": "2025-07-03T23:57:50.655222",
       "confirmed": false
     },
     "41": {
@@ -333,7 +333,7 @@
       "tournament_type": "vsa",
       "team_name": "team41",
       "rating": 71,
-      "timestamp": "2025-07-03T21:53:01.859295",
+      "timestamp": "2025-07-03T23:57:50.659835",
       "confirmed": false
     },
     "42": {
@@ -341,7 +341,7 @@
       "tournament_type": "vsa",
       "team_name": "team42",
       "rating": 72,
-      "timestamp": "2025-07-03T21:53:01.861719",
+      "timestamp": "2025-07-03T23:57:50.661416",
       "confirmed": false
     },
     "43": {
@@ -349,7 +349,7 @@
       "tournament_type": "vsa",
       "team_name": "team43",
       "rating": 73,
-      "timestamp": "2025-07-03T21:53:01.862972",
+      "timestamp": "2025-07-03T23:57:50.663653",
       "confirmed": false
     },
     "44": {
@@ -357,7 +357,7 @@
       "tournament_type": "vsa",
       "team_name": "team44",
       "rating": 74,
-      "timestamp": "2025-07-03T21:53:01.864311",
+      "timestamp": "2025-07-03T23:57:50.686821",
       "confirmed": false
     },
     "45": {
@@ -365,7 +365,7 @@
       "tournament_type": "vsa",
       "team_name": "team45",
       "rating": 75,
-      "timestamp": "2025-07-03T21:53:01.865688",
+      "timestamp": "2025-07-03T23:57:50.748495",
       "confirmed": false
     },
     "46": {
@@ -373,7 +373,7 @@
       "tournament_type": "vsa",
       "team_name": "team46",
       "rating": 76,
-      "timestamp": "2025-07-03T21:53:01.866949",
+      "timestamp": "2025-07-03T23:57:50.763176",
       "confirmed": false
     },
     "47": {
@@ -381,7 +381,7 @@
       "tournament_type": "vsa",
       "team_name": "team47",
       "rating": 77,
-      "timestamp": "2025-07-03T21:53:01.868213",
+      "timestamp": "2025-07-03T23:57:50.764828",
       "confirmed": false
     },
     "48": {
@@ -389,7 +389,7 @@
       "tournament_type": "vsa",
       "team_name": "team48",
       "rating": 78,
-      "timestamp": "2025-07-03T21:53:01.869251",
+      "timestamp": "2025-07-03T23:57:50.767812",
       "confirmed": false
     },
     "49": {
@@ -397,7 +397,7 @@
       "tournament_type": "vsa",
       "team_name": "team49",
       "rating": 79,
-      "timestamp": "2025-07-03T21:53:01.873443",
+      "timestamp": "2025-07-03T23:57:50.771505",
       "confirmed": false
     },
     "50": {
@@ -405,7 +405,7 @@
       "tournament_type": "vsa",
       "team_name": "team50",
       "rating": 30,
-      "timestamp": "2025-07-03T21:53:01.874901",
+      "timestamp": "2025-07-03T23:57:50.775721",
       "confirmed": false
     },
     "51": {
@@ -413,7 +413,7 @@
       "tournament_type": "vsa",
       "team_name": "team51",
       "rating": 31,
-      "timestamp": "2025-07-03T21:53:01.876103",
+      "timestamp": "2025-07-03T23:57:50.776445",
       "confirmed": false
     },
     "52": {
@@ -421,7 +421,7 @@
       "tournament_type": "vsa",
       "team_name": "team52",
       "rating": 32,
-      "timestamp": "2025-07-03T21:53:01.877135",
+      "timestamp": "2025-07-03T23:57:50.778439",
       "confirmed": false
     },
     "53": {
@@ -429,7 +429,7 @@
       "tournament_type": "vsa",
       "team_name": "team53",
       "rating": 33,
-      "timestamp": "2025-07-03T21:53:01.879546",
+      "timestamp": "2025-07-03T23:57:50.779845",
       "confirmed": false
     },
     "54": {
@@ -437,7 +437,7 @@
       "tournament_type": "vsa",
       "team_name": "team54",
       "rating": 34,
-      "timestamp": "2025-07-03T21:53:01.880642",
+      "timestamp": "2025-07-03T23:57:50.781381",
       "confirmed": false
     },
     "55": {
@@ -445,7 +445,7 @@
       "tournament_type": "vsa",
       "team_name": "team55",
       "rating": 35,
-      "timestamp": "2025-07-03T21:53:01.881794",
+      "timestamp": "2025-07-03T23:57:50.782897",
       "confirmed": false
     },
     "56": {
@@ -453,7 +453,7 @@
       "tournament_type": "vsa",
       "team_name": "team56",
       "rating": 36,
-      "timestamp": "2025-07-03T21:53:01.882877",
+      "timestamp": "2025-07-03T23:57:50.792846",
       "confirmed": false
     },
     "57": {
@@ -461,7 +461,7 @@
       "tournament_type": "vsa",
       "team_name": "team57",
       "rating": 37,
-      "timestamp": "2025-07-03T21:53:01.883985",
+      "timestamp": "2025-07-03T23:57:50.801392",
       "confirmed": false
     },
     "58": {
@@ -469,7 +469,7 @@
       "tournament_type": "vsa",
       "team_name": "team58",
       "rating": 38,
-      "timestamp": "2025-07-03T21:53:01.885041",
+      "timestamp": "2025-07-03T23:57:50.805091",
       "confirmed": false
     },
     "59": {
@@ -477,7 +477,7 @@
       "tournament_type": "vsa",
       "team_name": "team59",
       "rating": 39,
-      "timestamp": "2025-07-03T21:53:01.886410",
+      "timestamp": "2025-07-03T23:57:50.813246",
       "confirmed": false
     },
     "60": {
@@ -485,7 +485,7 @@
       "tournament_type": "vsa",
       "team_name": "team60",
       "rating": 40,
-      "timestamp": "2025-07-03T21:53:01.887565",
+      "timestamp": "2025-07-03T23:57:50.814280",
       "confirmed": false
     },
     "61": {
@@ -493,7 +493,7 @@
       "tournament_type": "vsa",
       "team_name": "team61",
       "rating": 41,
-      "timestamp": "2025-07-03T21:53:01.888901",
+      "timestamp": "2025-07-03T23:57:50.815968",
       "confirmed": false
     },
     "62": {
@@ -501,7 +501,7 @@
       "tournament_type": "vsa",
       "team_name": "team62",
       "rating": 42,
-      "timestamp": "2025-07-03T21:53:01.890056",
+      "timestamp": "2025-07-03T23:57:50.818127",
       "confirmed": false
     },
     "63": {
@@ -509,7 +509,7 @@
       "tournament_type": "vsa",
       "team_name": "team63",
       "rating": 43,
-      "timestamp": "2025-07-03T21:53:01.892753",
+      "timestamp": "2025-07-03T23:57:50.819891",
       "confirmed": false
     },
     "64": {
@@ -517,7 +517,7 @@
       "tournament_type": "vsa",
       "team_name": "team64",
       "rating": 44,
-      "timestamp": "2025-07-03T21:53:01.893975",
+      "timestamp": "2025-07-03T23:57:50.821854",
       "confirmed": false
     },
     "65": {
@@ -525,7 +525,7 @@
       "tournament_type": "vsa",
       "team_name": "team65",
       "rating": 45,
-      "timestamp": "2025-07-03T21:53:01.895259",
+      "timestamp": "2025-07-03T23:57:50.823763",
       "confirmed": false
     },
     "66": {
@@ -533,7 +533,7 @@
       "tournament_type": "vsa",
       "team_name": "team66",
       "rating": 46,
-      "timestamp": "2025-07-03T21:53:01.896474",
+      "timestamp": "2025-07-03T23:57:50.827117",
       "confirmed": false
     },
     "67": {
@@ -541,7 +541,7 @@
       "tournament_type": "vsa",
       "team_name": "team67",
       "rating": 47,
-      "timestamp": "2025-07-03T21:53:01.898239",
+      "timestamp": "2025-07-03T23:57:50.829657",
       "confirmed": false
     },
     "68": {
@@ -549,7 +549,7 @@
       "tournament_type": "vsa",
       "team_name": "team68",
       "rating": 48,
-      "timestamp": "2025-07-03T21:53:01.899626",
+      "timestamp": "2025-07-03T23:57:50.831840",
       "confirmed": false
     },
     "69": {
@@ -557,7 +557,7 @@
       "tournament_type": "vsa",
       "team_name": "team69",
       "rating": 49,
-      "timestamp": "2025-07-03T21:53:01.901066",
+      "timestamp": "2025-07-03T23:57:50.835479",
       "confirmed": false
     },
     "70": {
@@ -565,7 +565,7 @@
       "tournament_type": "vsa",
       "team_name": "team70",
       "rating": 50,
-      "timestamp": "2025-07-03T21:53:01.902273",
+      "timestamp": "2025-07-03T23:57:50.837281",
       "confirmed": false
     },
     "71": {
@@ -573,7 +573,7 @@
       "tournament_type": "vsa",
       "team_name": "team71",
       "rating": 51,
-      "timestamp": "2025-07-03T21:53:01.904886",
+      "timestamp": "2025-07-03T23:57:50.839059",
       "confirmed": false
     },
     "72": {
@@ -581,7 +581,7 @@
       "tournament_type": "vsa",
       "team_name": "team72",
       "rating": 52,
-      "timestamp": "2025-07-03T21:53:01.906286",
+      "timestamp": "2025-07-03T23:57:50.841049",
       "confirmed": false
     },
     "73": {
@@ -589,7 +589,7 @@
       "tournament_type": "vsa",
       "team_name": "team73",
       "rating": 53,
-      "timestamp": "2025-07-03T21:53:01.907695",
+      "timestamp": "2025-07-03T23:57:50.843026",
       "confirmed": false
     },
     "74": {
@@ -597,7 +597,7 @@
       "tournament_type": "vsa",
       "team_name": "team74",
       "rating": 54,
-      "timestamp": "2025-07-03T21:53:01.909239",
+      "timestamp": "2025-07-03T23:57:50.846265",
       "confirmed": false
     },
     "75": {
@@ -605,7 +605,7 @@
       "tournament_type": "vsa",
       "team_name": "team75",
       "rating": 55,
-      "timestamp": "2025-07-03T21:53:01.911023",
+      "timestamp": "2025-07-03T23:57:50.848598",
       "confirmed": false
     },
     "76": {
@@ -613,7 +613,7 @@
       "tournament_type": "vsa",
       "team_name": "team76",
       "rating": 56,
-      "timestamp": "2025-07-03T21:53:01.912359",
+      "timestamp": "2025-07-03T23:57:50.850193",
       "confirmed": false
     },
     "77": {
@@ -621,7 +621,7 @@
       "tournament_type": "vsa",
       "team_name": "team77",
       "rating": 57,
-      "timestamp": "2025-07-03T21:53:01.917203",
+      "timestamp": "2025-07-03T23:57:50.853784",
       "confirmed": false
     },
     "78": {
@@ -629,7 +629,7 @@
       "tournament_type": "vsa",
       "team_name": "team78",
       "rating": 58,
-      "timestamp": "2025-07-03T21:53:01.918299",
+      "timestamp": "2025-07-03T23:57:50.855851",
       "confirmed": false
     },
     "79": {
@@ -637,7 +637,7 @@
       "tournament_type": "vsa",
       "team_name": "team79",
       "rating": 59,
-      "timestamp": "2025-07-03T21:53:01.921418",
+      "timestamp": "2025-07-03T23:57:50.857500",
       "confirmed": false
     },
     "80": {
@@ -645,7 +645,7 @@
       "tournament_type": "vsa",
       "team_name": "team80",
       "rating": 60,
-      "timestamp": "2025-07-03T21:53:01.923193",
+      "timestamp": "2025-07-03T23:57:50.886361",
       "confirmed": false
     },
     "81": {
@@ -653,7 +653,7 @@
       "tournament_type": "vsa",
       "team_name": "team81",
       "rating": 61,
-      "timestamp": "2025-07-03T21:53:01.924552",
+      "timestamp": "2025-07-03T23:57:50.887639",
       "confirmed": false
     },
     "82": {
@@ -661,7 +661,7 @@
       "tournament_type": "vsa",
       "team_name": "team82",
       "rating": 62,
-      "timestamp": "2025-07-03T21:53:01.925992",
+      "timestamp": "2025-07-03T23:57:50.891943",
       "confirmed": false
     },
     "83": {
@@ -669,7 +669,7 @@
       "tournament_type": "vsa",
       "team_name": "team83",
       "rating": 63,
-      "timestamp": "2025-07-03T21:53:01.932381",
+      "timestamp": "2025-07-03T23:57:50.893664",
       "confirmed": false
     },
     "84": {
@@ -677,7 +677,7 @@
       "tournament_type": "vsa",
       "team_name": "team84",
       "rating": 64,
-      "timestamp": "2025-07-03T21:53:01.934131",
+      "timestamp": "2025-07-03T23:57:50.895737",
       "confirmed": false
     },
     "85": {
@@ -685,7 +685,7 @@
       "tournament_type": "vsa",
       "team_name": "team85",
       "rating": 65,
-      "timestamp": "2025-07-03T21:53:01.939027",
+      "timestamp": "2025-07-03T23:57:50.899509",
       "confirmed": false
     },
     "86": {
@@ -693,7 +693,7 @@
       "tournament_type": "vsa",
       "team_name": "team86",
       "rating": 66,
-      "timestamp": "2025-07-03T21:53:01.940626",
+      "timestamp": "2025-07-03T23:57:50.901586",
       "confirmed": false
     },
     "87": {
@@ -701,7 +701,7 @@
       "tournament_type": "vsa",
       "team_name": "team87",
       "rating": 67,
-      "timestamp": "2025-07-03T21:53:01.942310",
+      "timestamp": "2025-07-03T23:57:50.903706",
       "confirmed": false
     },
     "88": {
@@ -709,7 +709,7 @@
       "tournament_type": "vsa",
       "team_name": "team88",
       "rating": 68,
-      "timestamp": "2025-07-03T21:53:01.944116",
+      "timestamp": "2025-07-03T23:57:50.907171",
       "confirmed": false
     },
     "89": {
@@ -717,7 +717,7 @@
       "tournament_type": "vsa",
       "team_name": "team89",
       "rating": 69,
-      "timestamp": "2025-07-03T21:53:01.945708",
+      "timestamp": "2025-07-03T23:57:50.909576",
       "confirmed": false
     },
     "90": {
@@ -725,7 +725,7 @@
       "tournament_type": "vsa",
       "team_name": "team90",
       "rating": 70,
-      "timestamp": "2025-07-03T21:53:01.947282",
+      "timestamp": "2025-07-03T23:57:50.911801",
       "confirmed": false
     },
     "91": {
@@ -733,7 +733,7 @@
       "tournament_type": "vsa",
       "team_name": "team91",
       "rating": 71,
-      "timestamp": "2025-07-03T21:53:01.948971",
+      "timestamp": "2025-07-03T23:57:50.913527",
       "confirmed": false
     },
     "92": {
@@ -741,7 +741,7 @@
       "tournament_type": "vsa",
       "team_name": "team92",
       "rating": 72,
-      "timestamp": "2025-07-03T21:53:01.956645",
+      "timestamp": "2025-07-03T23:57:50.915936",
       "confirmed": false
     },
     "93": {
@@ -749,7 +749,7 @@
       "tournament_type": "vsa",
       "team_name": "team93",
       "rating": 73,
-      "timestamp": "2025-07-03T21:53:01.958423",
+      "timestamp": "2025-07-03T23:57:50.918471",
       "confirmed": false
     },
     "94": {
@@ -757,7 +757,7 @@
       "tournament_type": "vsa",
       "team_name": "team94",
       "rating": 74,
-      "timestamp": "2025-07-03T21:53:01.959943",
+      "timestamp": "2025-07-03T23:57:50.922291",
       "confirmed": false
     },
     "95": {
@@ -765,7 +765,7 @@
       "tournament_type": "vsa",
       "team_name": "team95",
       "rating": 75,
-      "timestamp": "2025-07-03T21:53:01.962507",
+      "timestamp": "2025-07-03T23:57:50.925456",
       "confirmed": false
     },
     "96": {
@@ -773,7 +773,7 @@
       "tournament_type": "vsa",
       "team_name": "team96",
       "rating": 76,
-      "timestamp": "2025-07-03T21:53:01.964119",
+      "timestamp": "2025-07-03T23:57:50.927992",
       "confirmed": false
     },
     "97": {
@@ -781,7 +781,7 @@
       "tournament_type": "vsa",
       "team_name": "team97",
       "rating": 77,
-      "timestamp": "2025-07-03T21:53:01.965803",
+      "timestamp": "2025-07-03T23:57:50.930125",
       "confirmed": false
     },
     "98": {
@@ -789,7 +789,7 @@
       "tournament_type": "vsa",
       "team_name": "team98",
       "rating": 78,
-      "timestamp": "2025-07-03T21:53:01.968739",
+      "timestamp": "2025-07-03T23:57:50.934355",
       "confirmed": false
     },
     "99": {
@@ -797,22 +797,13 @@
       "tournament_type": "vsa",
       "team_name": "team99",
       "rating": 79,
-      "timestamp": "2025-07-03T21:53:01.974261",
-      "confirmed": false
-    },
-    "2134680352": {
-      "username": "lxmeow",
-      "tournament_type": "vsa",
-      "team_name": "крутаякоманда",
-      "rating": 45,
-      "timestamp": "2025-07-03T21:56:35.345659",
+      "timestamp": "2025-07-03T23:57:50.936949",
       "confirmed": false
     }
   },
-  "stats": {
-    "total_registrations": 161,
-    "confirmed_registrations": 5,
-    "last_registration_time": "2025-07-03T21:56:35.345672"
-  },
-  "last_updated": "2025-07-03T21:56:35.345676"
+  "metadata": {
+    "created_at": "2025-07-03T23:57:50.609525",
+    "last_updated": "2025-07-03T23:57:50.989290",
+    "cleared_at": "2025-07-03T23:57:50.609532"
+  }
 }
