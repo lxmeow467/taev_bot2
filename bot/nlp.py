@@ -39,8 +39,13 @@ class NLPProcessor:
                 ],
                 "admin_confirm": [
                     r"подтвердить\s+@?(\w+)",
-                    r"@?(\w+)\s*\+1",
+                    r"бот,?\s*@?(\w+)\s*\+\s*1",
                     r"@?(\w+)\s*подтвержден"
+                ],
+                "admin_reject": [
+                    r"бот,?\s*@?(\w+)\s*-\s*1",
+                    r"отклонить\s+@?(\w+)",
+                    r"@?(\w+)\s*отклонен"
                 ]
             },
             "en": {
@@ -173,6 +178,13 @@ class NLPProcessor:
             username = match.group(1).strip()
             return {
                 "type": "admin_confirm",
+                "username": username
+            }
+        
+        elif command_type == "admin_reject":
+            username = match.group(1).strip()
+            return {
+                "type": "admin_reject",
                 "username": username
             }
         

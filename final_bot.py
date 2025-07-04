@@ -175,6 +175,8 @@ class TournamentBot:
                 await self.handle_rating(update, context, "h2h", parsed_command["rating"])
             elif command_type == "admin_confirm":
                 await self.handle_admin_confirm(update, context, parsed_command["username"])
+            elif command_type == "admin_reject":
+                await self.handle_admin_reject(update, context, parsed_command["username"])
 
         except Exception as e:
             logger.error(f"Ошибка обработки: {e}")
@@ -255,6 +257,29 @@ class TournamentBot:
         else:
             await update.message.reply_text(f"❌ Регистрация для @{target_username} не найдена")
 
+    async def handle_admin_reject(self, update: Update, context: ContextTypes.DEFAULT_TYPE, target_username: str):
+        """Отклонение админом"""
+        if not await self.is_admin(update, context):
+            await update.message.reply_text("❌ Только для администраторов")
+            return
+
+        temp_registrations = self.storage.get_temp_registrations()
+        target_user_id = None
+
+        for user_id, data in temp_registrations.items():
+            if data.get("username", "").lower() == target_username.lower():
+                target_user_id = user_id
+                break
+
+        if target_user_id:
+            success = self.storage.reject_registration(target_user_id)
+            if success:
+                await update.message.reply_text(f"❌ Регистрация отклонена для @{target_username}")
+            else:
+                await update.message.reply_text("❌ Ошибка отклонения")
+        else:
+            await update.message.reply_text(f"❌ Регистрация для @{target_username} не найдена")
+
     async def handle_comande(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /comande"""
         if not await self.is_admin(update, context):
@@ -269,7 +294,9 @@ class TournamentBot:
             "/stats - Статистика турнира\n"
             "/comande - Показать эту справку\n\n"
             "Для подтверждения регистрации используйте:\n"
-            "• Бот, подтвердить @username"
+            "• Бот, подтвердить @username\n"
+             "• Бот @username +1 добавить\n"
+            "• Бот @username - 1 отклонить"
         )
         await update.message.reply_text(command_text)
 

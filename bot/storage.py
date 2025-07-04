@@ -99,40 +99,57 @@ class DataStorage:
             return False
 
     def confirm_registration(self, user_id: int) -> bool:
-        """Confirm a temporary registration and move to main players"""
+        """Подтверждение регистрации"""
         try:
-            user_id_str = str(user_id)
-            temp_regs = self.data["temp_registrations"]
+            temp_registrations = self.get_temp_registrations()
 
-            if user_id_str not in temp_regs:
-                logger.warning(f"No temp registration found for user {user_id}")
+            if str(user_id) not in temp_registrations:
                 return False
 
-            reg_data = temp_regs[user_id_str]
-            tournament_type = reg_data["tournament_type"]
-            username = reg_data["username"]
+            user_data = temp_registrations[str(user_id)]
+            tournament_type = user_data["tournament_type"]
 
-            # Move to confirmed players
-            if tournament_type not in self.data["players"]:
-                self.data["players"][tournament_type] = {}
+            # Перемещаем в основные игроки
+            players = self.get_all_players()
+            if tournament_type not in players:
+                players[tournament_type] = {}
 
-            self.data["players"][tournament_type][username] = {
-                "name": reg_data["team_name"],
-                "stars": reg_data["rating"],
+            players[tournament_type][user_data["username"]] = {
+                "name": user_data["team_name"],
+                "stars": user_data["rating"],
                 "confirmed": True,
-                "confirmed_at": datetime.now().isoformat(),
-                "registered_at": reg_data["timestamp"]
+                "user_id": user_id,
+                "registered_at": datetime.now().isoformat()
             }
 
-            # Remove from temp registrations
-            del temp_regs[user_id_str]
+            self._save_data("players.json", players)
 
-            self._save_data()
-            logger.info(f"Confirmed registration for {username} in {tournament_type}")
+            # Удаляем из временных
+            del temp_registrations[str(user_id)]
+            self._save_data("temp_registrations.json", temp_registrations)
+
             return True
 
         except Exception as e:
-            logger.error(f"Error confirming registration: {e}")
+            logger.error(f"Ошибка подтверждения регистрации: {e}")
+            return False
+
+    def reject_registration(self, user_id: int) -> bool:
+        """Отклонение регистрации"""
+        try:
+            temp_registrations = self.get_temp_registrations()
+
+            if str(user_id) not in temp_registrations:
+                return False
+
+            # Просто удаляем из временных регистраций
+            del temp_registrations[str(user_id)]
+            self._save_data("temp_registrations.json", temp_registrations)
+
+            return True
+
+        except Exception as e:
+            logger.error(f"Ошибка отклонения регистрации: {e}")
             return False
 
     def get_all_players(self) -> Dict[str, Dict[str, Any]]:
