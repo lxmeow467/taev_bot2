@@ -49,12 +49,20 @@ class WorkingTournamentBot:
         
         logger.info("Компоненты турнирного бота инициализированы")
     
-    def is_admin(self, username: str) -> bool:
-        """Проверка является ли пользователь администратором"""
-        if not username:
+    async def is_admin(self, update, context) -> bool:
+        """Проверка является ли пользователь администратором чата"""
+        try:
+            user = update.effective_user
+            chat = update.effective_chat
+            
+            # Проверяем статус пользователя в чате
+            member = await context.bot.get_chat_member(chat.id, user.id)
+            
+            # Администраторы и создатели чата имеют права
+            return member.status in ['administrator', 'creator']
+        except Exception as e:
+            logger.error(f"Ошибка при проверке прав администратора: {e}")
             return False
-        clean_username = username.lstrip('@').lower()
-        return clean_username in self.admins
     
     async def handle_start(self, update, context):
         """Обработка команды /start"""
@@ -86,7 +94,7 @@ class WorkingTournamentBot:
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        if not self.is_admin(user.username):
+        if not await self.is_admin(update, context):
             error_text = self.localizer.get_text("admin_only", lang)
             await update.message.reply_text(error_text)
             return
@@ -109,7 +117,7 @@ class WorkingTournamentBot:
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        if not self.is_admin(user.username):
+        if not await self.is_admin(update, context):
             error_text = self.localizer.get_text("admin_only", lang)
             await update.message.reply_text(error_text)
             return
@@ -162,7 +170,7 @@ class WorkingTournamentBot:
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        if not self.is_admin(user.username):
+        if not await self.is_admin(update, context):
             error_text = self.localizer.get_text("admin_only", lang)
             await update.message.reply_text(error_text)
             return
@@ -188,7 +196,7 @@ class WorkingTournamentBot:
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        if not self.is_admin(user.username):
+        if not await self.is_admin(update, context):
             error_text = self.localizer.get_text("admin_only", lang)
             await update.message.reply_text(error_text)
             return
@@ -311,7 +319,7 @@ class WorkingTournamentBot:
         """Обработка подтверждения администратором"""
         user = update.effective_user
         
-        if not self.is_admin(user.username):
+        if not await self.is_admin(update, context):
             error_text = self.localizer.get_text("admin_only", lang)
             await update.message.reply_text(error_text)
             return
@@ -341,13 +349,7 @@ class WorkingTournamentBot:
         else:
             await update.message.reply_text("Не удалось подтвердить регистрацию.")
     
-    async def set_commands(self, application):
-        """Убрать все команды из меню"""
-        try:
-            await application.bot.set_my_commands([])
-            logger.info("Команды бота очищены")
-        except Exception as e:
-            logger.error(f"Ошибка при настройке команд: {e}")
+    
     
     async def run(self):
         """Запуск бота"""
@@ -365,7 +367,11 @@ class WorkingTournamentBot:
         application = Application.builder().token(self.token).build()
         
         # Убираем команды из меню Telegram
-        await self.set_commands(application)
+        try:
+            await application.bot.set_my_commands([])
+            logger.info("Команды бота очищены")
+        except Exception as e:
+            logger.error(f"Ошибка при настройке команд: {e}")
         
         # Добавление обработчиков команд (только для админов)
         application.add_handler(CommandHandler("start", self.handle_start))
@@ -382,22 +388,36 @@ class WorkingTournamentBot:
         asyncio.create_task(self.storage.periodic_cleanup())
         
         # Запуск бота
-        await application.run_polling(drop_pending_updates=True)
+        try:
+            await application.run_polling(drop_pending_updates=True)
+        except Exception as e:
+            logger.error(f"Ошибка при запуске polling: {e}")
+            raise
 
-async def main():
+def main():
     """Точка входа"""
+    if not TELEGRAM_AVAILABLE:
+        print("Библиотека Telegram недоступна. Проверьте установку.")
+        return
+    
     try:
         bot = WorkingTournamentBot()
-        await bot.run()
+        
+        # Получаем текущий event loop или создаем новый
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                # Если loop уже запущен, создаем задачу
+                asyncio.create_task(bot.run())
+            else:
+                loop.run_until_complete(bot.run())
+        except RuntimeError:
+            # Если нет event loop, создаем новый
+            asyncio.run(bot.run())
+            
     except Exception as e:
         logger.error(f"Не удалось запустить бота: {e}")
         raise
 
 if __name__ == "__main__":
-    if TELEGRAM_AVAILABLE:
-        asyncio.run(main())
-    else:
-        print("Библиотека Telegram недоступна. Проверьте установку.")
-        print("Запуск демо вместо этого...")
-        import subprocess
-        subprocess.run(["python", "simple_production_demo.py"])
+    main()
