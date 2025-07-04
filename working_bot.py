@@ -19,9 +19,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 try:
-    import telegram
     from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-    from telegram import Update, BotCommand
+    from telegram import Update
     TELEGRAM_AVAILABLE = True
 except ImportError as e:
     logger.warning(f"Ошибка импорта Telegram: {e}")
@@ -81,6 +80,29 @@ class WorkingTournamentBot:
         examples_text = self.localizer.get_text("command_examples", lang)
         
         await update.message.reply_text(f"{help_text}\n\n{examples_text}", parse_mode='HTML')
+    
+    async def handle_command(self, update, context):
+        """Обработка команды /command (только для админов)"""
+        user = update.effective_user
+        lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
+        
+        if not self.is_admin(user.username):
+            error_text = self.localizer.get_text("admin_only", lang)
+            await update.message.reply_text(error_text)
+            return
+        
+        await update.message.reply_text(
+            "🎮 <b>Команды администратора:</b>\n\n"
+            "/start - Запуск бота\n"
+            "/help - Помощь\n"
+            "/list - Список всех игроков\n"
+            "/stats - Статистика турнира\n"
+            "/clear confirm - Очистить все данные\n"
+            "/command - Показать эту справку\n\n"
+            "📝 <b>Для подтверждения регистрации:</b>\n"
+            "Напишите: 'подтвердить @username'",
+            parse_mode='HTML'
+        )
     
     async def handle_list(self, update, context):
         """Обработка команды /list (только для админов)"""
@@ -351,6 +373,7 @@ class WorkingTournamentBot:
         application.add_handler(CommandHandler("list", self.handle_list))
         application.add_handler(CommandHandler("stats", self.handle_stats))
         application.add_handler(CommandHandler("clear", self.handle_clear))
+        application.add_handler(CommandHandler("command", self.handle_command))
         
         # Обработчик сообщений для обработки естественного языка
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.handle_message))
