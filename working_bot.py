@@ -387,9 +387,22 @@ class WorkingTournamentBot:
         # Запуск периодической очистки
         asyncio.create_task(self.storage.periodic_cleanup())
         
-        # Запуск бота
+        # Запуск бота с правильным управлением lifecycle
         try:
-            await application.run_polling(drop_pending_updates=True)
+            async with application:
+                await application.start()
+                await application.updater.start_polling(drop_pending_updates=True)
+                logger.info("Бот успешно запущен и готов к работе!")
+                
+                # Держим бота работающим
+                try:
+                    await asyncio.Event().wait()  # Бесконечное ожидание
+                except KeyboardInterrupt:
+                    logger.info("Получен сигнал остановки")
+                finally:
+                    await application.updater.stop()
+                    await application.stop()
+                    
         except Exception as e:
             logger.error(f"Ошибка при запуске polling: {e}")
             raise
@@ -403,16 +416,15 @@ def main():
     try:
         bot = WorkingTournamentBot()
         
-        # Получаем текущий event loop или создаем новый
+        # Проверяем, есть ли уже запущенный event loop (как в Replit)
         try:
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                # Если loop уже запущен, создаем задачу
-                asyncio.create_task(bot.run())
-            else:
-                loop.run_until_complete(bot.run())
+            loop = asyncio.get_running_loop()
+            # Если event loop уже запущен, создаем задачу
+            task = asyncio.create_task(bot.run())
+            logger.info("Бот запущен как задача в существующем event loop")
+            return task
         except RuntimeError:
-            # Если нет event loop, создаем новый
+            # Если нет активного event loop, создаем новый
             asyncio.run(bot.run())
             
     except Exception as e:
@@ -420,4 +432,11 @@ def main():
         raise
 
 if __name__ == "__main__":
+    import nest_asyncio
+    try:
+        # Разрешаем вложенные event loops для совместимости с Replit
+        nest_asyncio.apply()
+    except:
+        pass
+    
     main()
