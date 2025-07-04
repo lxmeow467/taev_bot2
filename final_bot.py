@@ -44,6 +44,11 @@ class TournamentBot:
             raise ValueError("BOT_TOKEN не найден в переменных окружения")
 
         self.admins = [admin.strip().lower() for admin in os.getenv('ADMINS', '').split(',') if admin.strip()]
+        
+        # ID владельца бота (ваш Telegram ID)
+        self.owner_id = int(os.getenv('OWNER_ID', '0'))
+        if self.owner_id == 0:
+            raise ValueError("OWNER_ID не найден в переменных окружения")
 
         # Инициализация компонентов
         self.storage = DataStorage()
@@ -51,6 +56,26 @@ class TournamentBot:
         self.nlp = NLPProcessor()
 
         logger.info("Турнирный бот инициализирован")
+
+    async def is_owner_in_chat(self, update, context) -> bool:
+        """Проверка присутствия владельца в чате"""
+        try:
+            chat = update.effective_chat
+            
+            # Для личных сообщений разрешаем работу только владельцу
+            if chat.type == 'private':
+                return update.effective_user.id == self.owner_id
+            
+            # Для групповых чатов проверяем присутствие владельца
+            try:
+                owner_member = await context.bot.get_chat_member(chat.id, self.owner_id)
+                return owner_member.status in ['member', 'administrator', 'creator']
+            except Exception:
+                return False
+                
+        except Exception as e:
+            logger.error(f"Ошибка проверки владельца: {e}")
+            return False
 
     async def is_admin(self, update, context) -> bool:
         """Проверка прав администратора"""
@@ -66,6 +91,9 @@ class TournamentBot:
 
     async def handle_start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /start"""
+        if not await self.is_owner_in_chat(update, context):
+            return
+            
         user = update.effective_user
         welcome_text = (
             "🏆 Добро пожаловать в турнирный бот!\n\n"
@@ -78,6 +106,9 @@ class TournamentBot:
 
     async def handle_help(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /help"""
+        if not await self.is_owner_in_chat(update, context):
+            return
+            
         help_text = (
             "❓ Команды бота:\n\n"
             "🔸 Бот, мой ник НазваниеКоманды\n"
@@ -148,6 +179,9 @@ class TournamentBot:
 
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Обработка сообщений"""
+        if not await self.is_owner_in_chat(update, context):
+            return
+            
         user = update.effective_user
         message_text = update.message.text
 
