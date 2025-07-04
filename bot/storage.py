@@ -101,7 +101,7 @@ class DataStorage:
     def confirm_registration(self, user_id: int) -> bool:
         """Подтверждение регистрации"""
         try:
-            temp_registrations = self.get_temp_registrations()
+            temp_registrations = self.data.get("temp_registrations", {})
 
             if str(user_id) not in temp_registrations:
                 return False
@@ -110,11 +110,10 @@ class DataStorage:
             tournament_type = user_data["tournament_type"]
 
             # Перемещаем в основные игроки
-            players = self.get_all_players()
-            if tournament_type not in players:
-                players[tournament_type] = {}
+            if tournament_type not in self.data["players"]:
+                self.data["players"][tournament_type] = {}
 
-            players[tournament_type][user_data["username"]] = {
+            self.data["players"][tournament_type][user_data["username"]] = {
                 "name": user_data["team_name"],
                 "stars": user_data["rating"],
                 "confirmed": True,
@@ -122,11 +121,11 @@ class DataStorage:
                 "registered_at": datetime.now().isoformat()
             }
 
-            self._save_data("players.json", players)
-
             # Удаляем из временных
-            del temp_registrations[str(user_id)]
-            self._save_data("temp_registrations.json", temp_registrations)
+            del self.data["temp_registrations"][str(user_id)]
+            
+            # Сохраняем данные
+            self._save_data()
 
             return True
 
@@ -137,14 +136,14 @@ class DataStorage:
     def reject_registration(self, user_id: int) -> bool:
         """Отклонение регистрации"""
         try:
-            temp_registrations = self.get_temp_registrations()
-
-            if str(user_id) not in temp_registrations:
+            if str(user_id) not in self.data["temp_registrations"]:
                 return False
 
             # Просто удаляем из временных регистраций
-            del temp_registrations[str(user_id)]
-            self._save_data("temp_registrations.json", temp_registrations)
+            del self.data["temp_registrations"][str(user_id)]
+            
+            # Сохраняем данные
+            self._save_data()
 
             return True
 
