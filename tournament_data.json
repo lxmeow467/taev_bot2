@@ -1,13 +1,6 @@
 {
   "players": {
     "vsa": {
-      "ㅤ": {
-        "name": "зе",
-        "stars": 20,
-        "confirmed": true,
-        "confirmed_at": "2025-07-04T00:45:56.486551",
-        "registered_at": "2025-07-04T00:40:33.604020"
-      },
       "lxmeow": {
         "name": "cska",
         "stars": 99,
@@ -21,7 +14,7 @@
   "temp_registrations": {},
   "metadata": {
     "created_at": "2025-07-04T00:15:46.327467",
-    "last_updated": "2025-07-04T00:47:11.532950",
+    "last_updated": "2025-07-04T01:00:40.653749",
     "cleared_at": "2025-07-04T00:15:46.327476"
   }
 }
