@@ -160,6 +160,24 @@ class DataStorage:
         """Get all temporary registrations"""
         return self.data.get("temp_registrations", {})
 
+    def remove_confirmed_player(self, tournament_type: str, username: str) -> bool:
+        """Удаление подтвержденного игрока"""
+        try:
+            players = self.data.get("players", {})
+            tournament_players = players.get(tournament_type, {})
+            
+            if username in tournament_players:
+                del tournament_players[username]
+                self._save_data()
+                logger.info(f"Удален игрок {username} из турнира {tournament_type}")
+                return True
+            
+            return False
+            
+        except Exception as e:
+            logger.error(f"Ошибка удаления игрока: {e}")
+            return False
+
     def get_statistics(self) -> Dict[str, Any]:
         """Get tournament statistics"""
         players = self.data.get("players", {})

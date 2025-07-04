@@ -292,6 +292,7 @@ class TournamentBot:
             "/help - Помощь\n"
             "/roster - Список всех игроков\n"
             "/stats - Статистика турнира\n"
+            "/delplayer @username - Удалить игрока\n"
             "/comande - Показать эту справку\n\n"
             "Для подтверждения регистрации используйте:\n"
             "• Бот, подтвердить @username\n"
@@ -299,6 +300,65 @@ class TournamentBot:
             "• Бот @username - 1 отклонить"
         )
         await update.message.reply_text(command_text)
+
+    async def handle_delplayer(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Команда /delplayer для удаления игрока"""
+        if not await self.is_admin(update, context):
+            await update.message.reply_text("❌ Только для администраторов")
+            return
+
+        # Проверяем аргументы команды
+        if not context.args:
+            await update.message.reply_text(
+                "❌ Укажите имя пользователя\n"
+                "Пример: /delplayer @username"
+            )
+            return
+
+        target_username = context.args[0].replace("@", "").lower()
+
+        # Удаляем из временных регистраций
+        temp_registrations = self.storage.get_temp_registrations()
+        temp_deleted = False
+        for user_id, data in list(temp_registrations.items()):
+            if data.get("username", "").lower() == target_username:
+                success = self.storage.reject_registration(int(user_id))
+                if success:
+                    temp_deleted = True
+                    break
+
+        # Удаляем из подтвержденных игроков
+        players = self.storage.get_all_players()
+        confirmed_deleted = False
+        tournament_deleted = None
+
+        for tournament_type in ["vsa", "h2h"]:
+            tournament_players = players.get(tournament_type, {})
+            for username_key in list(tournament_players.keys()):
+                if username_key.lower() == target_username:
+                    success = self.storage.remove_confirmed_player(tournament_type, username_key)
+                    if success:
+                        confirmed_deleted = True
+                        tournament_deleted = tournament_type.upper()
+                        break
+
+        # Формируем ответ
+        if temp_deleted and confirmed_deleted:
+            await update.message.reply_text(
+                f"✅ Игрок @{target_username} удален из ожидающих и из турнира {tournament_deleted}"
+            )
+        elif temp_deleted:
+            await update.message.reply_text(
+                f"✅ Игрок @{target_username} удален из ожидающих подтверждения"
+            )
+        elif confirmed_deleted:
+            await update.message.reply_text(
+                f"✅ Игрок @{target_username} удален из турнира {tournament_deleted}"
+            )
+        else:
+            await update.message.reply_text(
+                f"❌ Игрок @{target_username} не найден в списках"
+            )
 
     async def run(self):
         """Запуск бота"""
@@ -312,6 +372,7 @@ class TournamentBot:
         application.add_handler(CommandHandler("roster", self.handle_roster))
         application.add_handler(CommandHandler("stats", self.handle_stats))
         application.add_handler(CommandHandler("comande", self.handle_comande))
+        application.add_handler(CommandHandler("delplayer", self.handle_delplayer))
         application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self.handle_message))
 
         # Запускаем бота
