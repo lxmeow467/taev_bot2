@@ -158,6 +158,16 @@ class TournamentBot:
             await update.message.reply_text("❌ Только для администраторов")
             return
 
+        # Удаляем команду из чата (если это групповой чат)
+        if update.effective_chat.type != 'private':
+            try:
+                await context.bot.delete_message(
+                    chat_id=update.effective_chat.id,
+                    message_id=update.message.message_id
+                )
+            except Exception as e:
+                logger.error(f"Не удалось удалить сообщение: {e}")
+
         players = self.storage.get_all_players()
         temp_registrations = self.storage.get_temp_registrations()
 
@@ -190,7 +200,20 @@ class TournamentBot:
                 message_parts.append(f"• @{username} - {tournament}: {team_name} ({rating} ⭐)")
 
         final_message = "\n".join(message_parts) if message_parts else "Регистраций нет"
-        await update.message.reply_text(final_message)
+        
+        # Отправляем в личные сообщения если это групповой чат
+        if update.effective_chat.type != 'private':
+            try:
+                await context.bot.send_message(
+                    chat_id=update.effective_user.id,
+                    text=f"📊 Список игроков:\n\n{final_message}"
+                )
+                await update.message.reply_text("✅ Список отправлен в личные сообщения")
+            except Exception as e:
+                logger.error(f"Не удалось отправить в личные сообщения: {e}")
+                await update.message.reply_text(final_message)
+        else:
+            await update.message.reply_text(final_message)
 
     async def handle_stats(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Команда /stats"""
@@ -304,6 +327,21 @@ class TournamentBot:
         except ValidationError as e:
             await update.message.reply_text(f"❌ Ошибка: {e}")
 
+    async def send_admin_notification(self, context: ContextTypes.DEFAULT_TYPE, message: str):
+        """Отправка уведомления всем админам в личные сообщения"""
+        # Получаем список ID админов (нужно добавить в .env)
+        admin_ids = os.getenv('ADMIN_IDS', '').split(',')
+        
+        for admin_id in admin_ids:
+            if admin_id.strip():
+                try:
+                    await context.bot.send_message(
+                        chat_id=int(admin_id.strip()),
+                        text=f"🔔 Админ-уведомление:\n{message}"
+                    )
+                except Exception as e:
+                    logger.error(f"Не удалось отправить уведомление админу {admin_id}: {e}")
+
     async def handle_admin_confirm(self, update: Update, context: ContextTypes.DEFAULT_TYPE, target_username: str):
         """Подтверждение админом"""
         if not await self.is_admin(update, context):
@@ -322,6 +360,11 @@ class TournamentBot:
             success = self.storage.confirm_registration(target_user_id)
             if success:
                 await update.message.reply_text(f"✅ Регистрация подтверждена для @{target_username}")
+                # Отправляем уведомление другим админам
+                await self.send_admin_notification(
+                    context, 
+                    f"Админ @{update.effective_user.username} подтвердил регистрацию @{target_username}"
+                )
             else:
                 await update.message.reply_text("❌ Ошибка подтверждения")
         else:
