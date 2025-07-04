@@ -77,9 +77,14 @@ class WorkingTournamentBot:
         logger.info(f"Пользователь {user.username or user.first_name or 'Unknown'} запустил бота")
     
     async def handle_help(self, update, context):
-        """Обработка команды /help"""
+        """Обработка команды /help (только для админов)"""
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
+        
+        if not await self.is_admin(update, context):
+            error_text = "❓ Используйте:\n• Бот, мой ник [название команды]\n• Бот, мой рекорд в VSA [число]\n• Бот, мой рекорд в H2H [число]"
+            await update.message.reply_text(error_text)
+            return
         
         help_text = self.localizer.get_text("help_message", lang)
         examples_text = self.localizer.get_text("command_examples", lang)
@@ -222,6 +227,11 @@ class WorkingTournamentBot:
         logger.info(f"Обработка сообщения от {user.username}: {message_text}")
         
         try:
+            # Сначала проверяем, является ли это ответом на сообщение для подтверждения
+            if update.message.reply_to_message and await self.is_admin(update, context):
+                await self.handle_reply_confirmation(update, context)
+                return
+            
             # Парсинг сообщения через NLP процессор
             parsed_command = self.nlp.parse_message(message_text, lang)
             
@@ -341,6 +351,30 @@ class WorkingTournamentBot:
             logger.info(f"Админ {user.username} подтвердил регистрацию для {target_username}")
         else:
             await update.message.reply_text("Не удалось подтвердить регистрацию.")
+
+    async def handle_reply_confirmation(self, update, context):
+        """Обработка подтверждения через ответ на сообщение"""
+        user = update.effective_user
+        
+        if not await self.is_admin(update, context):
+            return
+        
+        # Проверяем, является ли это ответом на сообщение
+        if not update.message.reply_to_message:
+            return
+        
+        # Извлекаем информацию из сообщения, на которое отвечаем
+        reply_text = update.message.reply_to_message.text
+        current_text = update.message.text.lower()
+        
+        # Проверяем, содержит ли ответ подтверждение
+        if "подтвердить" in current_text or "подтверждаю" in current_text or "да" in current_text:
+            # Ищем username в исходном сообщении
+            import re
+            username_match = re.search(r'@(\w+)', reply_text)
+            if username_match:
+                username = username_match.group(1)
+                await self.handle_admin_confirm(update, context, username, 'ru')
     
     
     

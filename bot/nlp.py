@@ -17,24 +17,28 @@ class NLPProcessor:
         self.patterns = {
             "ru": {
                 "team_name": [
-                    r"бот,?\s*мой\s+ник\s+(.+?)(?:\s|$)",
-                    r"бот,?\s*команда\s+(.+?)(?:\s|$)",
-                    r"бот,?\s*название\s+команды\s+(.+?)(?:\s|$)"
+                    r"бот,?\s*мой\s+ник\s+(.+?)(?:\s*$)",
+                    r"бот,?\s*команда\s+(.+?)(?:\s*$)",
+                    r"бот,?\s*название\s+команды\s+(.+?)(?:\s*$)"
                 ],
                 "vsa_rating": [
                     r"бот,?\s*мой\s+рекорд\s+в\s+vsa\s+(\d+)",
                     r"бот,?\s*vsa\s+рейтинг\s+(\d+)",
-                    r"бот,?\s*рейтинг\s+vsa\s+(\d+)"
+                    r"бот,?\s*рейтинг\s+vsa\s+(\d+)",
+                    r"бот,?\s*мой\s+рекорд\s+в\s+vsa\s+х?\s*(\d+)",
+                    r"бот,?\s*vsa\s+х?\s*(\d+)"
                 ],
                 "h2h_rating": [
                     r"бот,?\s*мой\s+рекорд\s+в\s+h2h\s+(\d+)",
                     r"бот,?\s*h2h\s+рейтинг\s+(\d+)",
-                    r"бот,?\s*рейтинг\s+h2h\s+(\d+)"
+                    r"бот,?\s*рейтинг\s+h2h\s+(\d+)",
+                    r"бот,?\s*мой\s+рекорд\s+в\s+h2h\s+х?\s*(\d+)",
+                    r"бот,?\s*h2h\s+х?\s*(\d+)"
                 ],
                 "admin_confirm": [
-                    r"бот,?\s*@?(\w+)\s*\+1",
-                    r"бот,?\s*подтвердить\s+@?(\w+)",
-                    r"бот,?\s*@?(\w+)\s*подтвержден"
+                    r"подтвердить\s+@?(\w+)",
+                    r"@?(\w+)\s*\+1",
+                    r"@?(\w+)\s*подтвержден"
                 ]
             },
             "en": {
@@ -75,8 +79,12 @@ class NLPProcessor:
         if not message:
             return None
         
+        # Remove HTML tags
+        import re
+        message_clean = re.sub(r'<[^>]+>', '', message)
+        
         # Normalize message
-        message_lower = message.lower().strip()
+        message_lower = message_clean.lower().strip()
         
         # Get patterns for the language (fallback to English)
         lang_patterns = self.patterns.get(language, self.patterns["en"])
