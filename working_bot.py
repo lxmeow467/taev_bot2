@@ -77,19 +77,29 @@ class WorkingTournamentBot:
         logger.info(f"Пользователь {user.username or user.first_name or 'Unknown'} запустил бота")
     
     async def handle_help(self, update, context):
-        """Обработка команды /help (только для админов)"""
+        """Обработка команды /help"""
         user = update.effective_user
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        if not await self.is_admin(update, context):
-            error_text = "❓ Используйте:\n• Бот, мой ник [название команды]\n• Бот, мой рекорд в VSA [число]\n• Бот, мой рекорд в H2H [число]"
-            await update.message.reply_text(error_text)
-            return
-        
-        help_text = self.localizer.get_text("help_message", lang)
-        examples_text = self.localizer.get_text("command_examples", lang)
-        
-        await update.message.reply_text(f"{help_text}\n\n{examples_text}")
+        if await self.is_admin(update, context):
+            help_text = self.localizer.get_text("help_message", lang)
+            examples_text = self.localizer.get_text("command_examples", lang)
+            await update.message.reply_text(f"{help_text}\n\n{examples_text}")
+        else:
+            help_text = (
+                "❓ Как зарегистрироваться на турнир:\n\n"
+                "1️⃣ Сначала укажите название команды:\n"
+                "• Бот, мой ник НазваниеКоманды\n\n"
+                "2️⃣ Затем укажите рейтинг для турнира:\n"
+                "• Бот, мой рекорд в VSA 99\n"
+                "• Бот, мой рекорд в H2H 99\n\n"
+                "📝 Примеры команд:\n"
+                "• Бот, мой ник SuperTeam\n"
+                "• Бот, мой рекорд в VSA 85\n"
+                "• Бот, мой рекорд в H2H 78\n\n"
+                "⚠️ После регистрации ожидайте подтверждения от администратора."
+            )
+            await update.message.reply_text(help_text)
     
     async def handle_command(self, update, context):
         """Обработка команды /command (только для админов)"""
@@ -224,7 +234,7 @@ class WorkingTournamentBot:
         message_text = update.message.text
         lang = 'ru' if user.language_code and user.language_code.startswith('ru') else 'en'
         
-        logger.info(f"Обработка сообщения от {user.username}: {message_text}")
+        logger.info(f"Обработка сообщения от {user.username or user.first_name or 'Unknown'}: {message_text}")
         
         try:
             # Сначала проверяем, является ли это ответом на сообщение для подтверждения
@@ -235,8 +245,16 @@ class WorkingTournamentBot:
             # Парсинг сообщения через NLP процессор
             parsed_command = self.nlp.parse_message(message_text, lang)
             
+            logger.info(f"Parsed command: {parsed_command}")
+            
             if not parsed_command:
-                help_text = self.localizer.get_text("unrecognized_command", lang)
+                help_text = (
+                    "❓ Не понял команду. Используйте:\n\n"
+                    "🔸 Бот, мой ник НазваниеКоманды\n"
+                    "🔸 Бот, мой рекорд в VSA 99\n"
+                    "🔸 Бот, мой рекорд в H2H 99\n\n"
+                    "Или отправьте /help для подробной справки."
+                )
                 await update.message.reply_text(help_text)
                 return
             

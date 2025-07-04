@@ -19,7 +19,9 @@ class NLPProcessor:
                 "team_name": [
                     r"бот,?\s*мой\s+ник\s+(.+?)(?:\s*$)",
                     r"бот,?\s*команда\s+(.+?)(?:\s*$)",
-                    r"бот,?\s*название\s+команды\s+(.+?)(?:\s*$)"
+                    r"бот,?\s*название\s+команды\s+(.+?)(?:\s*$)",
+                    r"бот\s*,?\s*мой\s+ник\s+(.+)",
+                    r"бот\s+мой\s+ник\s+(.+)"
                 ],
                 "vsa_rating": [
                     r"бот,?\s*мой\s+рекорд\s+в\s+vsa\s+(\d+)",
@@ -79,9 +81,9 @@ class NLPProcessor:
         if not message:
             return None
         
-        # Remove HTML tags
+        # Не удаляем HTML теги полностью, только заменяем на пробелы чтобы не склеивать слова
         import re
-        message_clean = re.sub(r'<[^>]+>', '', message)
+        message_clean = re.sub(r'<[^>]+>', ' ', message)
         
         # Normalize message
         message_lower = message_clean.lower().strip()
@@ -146,6 +148,8 @@ class NLPProcessor:
         """
         if command_type == "team_name":
             team_name = match.group(1).strip()
+            # Убираем квадратные скобки если они есть
+            team_name = team_name.strip('[]')
             return {
                 "type": "set_team_name",
                 "team_name": team_name
